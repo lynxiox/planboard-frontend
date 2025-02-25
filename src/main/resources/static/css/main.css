@@ -1,0 +1,165 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+    background-color: #f0f0f0; /* Светлый фон */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #4a4e69; /* Нейтральный темно-серый с оттенком фиолетового */
+    color: #fff;
+}
+#user-info, #current-user, #user-email {
+    color: #000; /* Черный цвет текста */
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+input {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+#tasks-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#tasks-container .col-md-6 {
+    flex: 1;
+    margin: 0 10px;
+}
+
+#background-panel {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-menu {
+    border: none;
+    background-color: transparent;
+}
+
+.menu-content {
+    width: 200px;
+}
+
+.gradient-option {
+    margin: 5px;
+    border: 2px solid transparent;
+}
+
+.gradient-option:hover {
+    border: 2px solid #333;
+}
+.add-task-button {
+    background-color: #5c7cfa;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-task-button:hover {
+    background-color: #0056b3;
+}
+
+.logout-button {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 5px 10px; /* Уменьшите отступы для уменьшения ширины */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex; /* Используйте flexbox для выравнивания содержимого */
+    align-items: center; /* Центрирование по вертикали */
+}
+
+.logout-button i {
+    margin-right: 5px; /* Уменьшите отступ между иконкой и текстом */
+}
+
+
+#task-context-menu {
+    z-index: 1000;
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.task-board {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.task-column {
+    width: 45%;
+    background-color: rgba(248, 248, 248, 0.9);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.task-list {
+    min-height: 200px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task-list .list-group-item {
+    margin: 5px 0;
+    cursor: move;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.task-list .list-group-item:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.task-placeholder {
+    height: 50px;
+    background-color: #e0e0e0;
+    border: dashed 2px #bbb;
+    margin: 5px 0;
+}
+
+.pending-tasks {
+    background-color: #f4e1a1; /* Светло-бежевый для незавершенных задач */
+}
+
+.completed-tasks {
+    background-color: #a8d5ba; /* Приглушенный зеленый для завершенных задач */
+}
