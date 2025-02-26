@@ -1,4 +1,4 @@
-# **planboard-email-frontend**
+# **planboard-frontend**
 
 ## **Project Overview**
 
