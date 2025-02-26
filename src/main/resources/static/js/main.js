@@ -1,4 +1,4 @@
-const BASE_URL = window.APP_CONFIG.BASE_URL || "http://localhost:8080";
+const BASE_URL = window.APP_CONFIG.BASE_URL || "http://94.241.171.153:8080" || "http://localhost:8080";
 console.log("Backend URL:", BASE_URL);
 
 $(document).ready(function () {
