@@ -291,7 +291,7 @@ $(document).ready(function () {
         });
     });
 
-    // Обработка входа
+    // Обработка входаа
     $('#login-form').on('submit', function (event) {
         event.preventDefault();
         const email = $('input[name="login-email"]').val();
