@@ -25,12 +25,12 @@ $(document).ready(function () {
         $('.add-task-button').hide();
     }
 
-    // Открытие модального окна регистрации через Bootstrap
+    // Открытие модального окна регистрации
     $('#register-btn').click(function () {
         $('#register-modal').modal('show');
     });
 
-    // Открытие модального окна входа через Bootstrap
+    // Открытие модального окна входа
     $('#login-btn').click(function () {
         $('#login-modal').modal('show');
     });
@@ -38,8 +38,9 @@ $(document).ready(function () {
     $('#change-background-btn').on('click', function () {
         $('#background-options').toggle();
     });
+
     function formatDate(dateString) {
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        const options = {day: 'numeric', month: 'short', year: 'numeric'};
         return new Date(dateString).toLocaleDateString('en-US', options);
     }
 
@@ -189,6 +190,8 @@ $(document).ready(function () {
             iscompleted: updatedIsCompleted
         };
 
+        $('#edit-task-title-error').hide();
+
         $.ajax({
             url: `${BASE_URL}/api/v1/task/${taskId}/update`,
             method: 'PATCH',
@@ -202,8 +205,12 @@ $(document).ready(function () {
                 $('#edit-task-modal').modal('hide');
                 loadUserTasks();
             },
-            error: function () {
-                alert('Failed to update task');
+            error: function (xhr) {
+                if (xhr.status === 409 && xhr.responseJSON && xhr.responseJSON.message === "Task with this title already exists for this user") {
+                    $('#edit-task-title-error').text('Task with this title already exists').show();
+                } else {
+                    alert('Failed to update task');
+                }
             }
         });
     });
@@ -218,7 +225,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: `${BASE_URL}/api/v1/tasks`, // Используем правильный синтаксис
+            url: `${BASE_URL}/api/v1/tasks`,
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + accessToken
@@ -294,7 +301,7 @@ $(document).ready(function () {
             url: `${BASE_URL}/api/v1/auth/signin`,
             method: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify({ email: email, password: password }),
+            data: JSON.stringify({email: email, password: password}),
             success: function (response) {
                 const accessToken = response.accessToken;
                 const refreshToken = response.refreshToken;
@@ -324,7 +331,7 @@ $(document).ready(function () {
         connectWith: ".task-list",
         placeholder: "ui-state-highlight",
         tolerance: "pointer",
-        update: function(event, ui) {
+        update: function (event, ui) {
             const taskId = ui.item.data('task-id');
             const isCompleted = $(ui.item).parent().attr('id') === 'completed-tasks';
 
@@ -335,7 +342,7 @@ $(document).ready(function () {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('accessToken')
                 },
-                success: function(task) {
+                success: function (task) {
                     // Отправка запроса на сервер для обновления статуса задачи с заполненным заголовком
                     $.ajax({
                         url: `${BASE_URL}/api/v1/task/${taskId}/update`,
@@ -349,7 +356,7 @@ $(document).ready(function () {
                             description: task.description,
                             iscompleted: isCompleted
                         }),
-                        success: function() {
+                        success: function () {
                             if (isCompleted) {
                                 ui.item.removeClass('pending-task').addClass('completed-task');
                             } else {
@@ -357,13 +364,13 @@ $(document).ready(function () {
                             }
                             console.log('Task status updated successfully');
                         },
-                        error: function() {
+                        error: function () {
                             alert('Failed to update task status');
                             loadUserTasks();
                         }
                     });
                 },
-                error: function() {
+                error: function () {
                     alert('Failed to retrieve task data');
                 }
             });
@@ -372,12 +379,13 @@ $(document).ready(function () {
 
 
     // Открыть модальное окно при нажатии кнопки "Добавить задачу"
-    $('.add-task-button').click(function() {
+    $('.add-task-button').click(function () {
         $('#add-task-modal').modal('show');
+        $('#task-title-error').hide();
     });
 
     // Обработка формы добавления задачи
-    $('#add-task-form').submit(function(event) {
+    $('#add-task-form').submit(function (event) {
         event.preventDefault();
 
         const title = $('#task-title').val();
@@ -396,14 +404,22 @@ $(document).ready(function () {
                 title: title,
                 description: description
             }),
-            success: function(response) {
+            success: function (response) {
                 alert('The task has been created successfully');
                 $('#add-task-modal').modal('hide');
                 loadUserTasks();
             },
-            error: function() {
-                alert('Failed to create task');
+            error: function (xhr) {
+                // Проверяем код ошибки
+                if (xhr.status === 409 && xhr.responseJSON && xhr.responseJSON.message === "Task with this title already exists for this user") {
+                    $('#task-title-error').text('Task with this title already exists').show();
+                } else {
+                    alert('Failed to create task');
+                }
             }
+            // error: function() {
+            //     alert('Failed to create task');
+            // }
         });
     });
 
